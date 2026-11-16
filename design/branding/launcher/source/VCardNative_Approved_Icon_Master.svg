@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- VCard Native approved launcher icon: vector reconstruction (M1.13 Step 3B).
+     Traced from the owner-approved presentation board; approximation, not an exact reproduction.
+     Self-contained: no text, fonts, embedded raster images or external references. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>VCard Native launcher icon - full color master</title>
+  <defs>
+    <radialGradient id="canvasNavy" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#06143A"/>
+      <stop offset="1" stop-color="#020617"/>
+    </radialGradient>
+    <radialGradient id="panelFill" cx="0.25" cy="0.2" r="0.95">
+      <stop offset="0" stop-color="#0B3C8C"/>
+      <stop offset="0.45" stop-color="#05175A"/>
+      <stop offset="1" stop-color="#0A0636"/>
+    </radialGradient>
+    <linearGradient id="frameStroke" x1="64" y1="44" x2="444" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22E6FF"/>
+      <stop offset="0.45" stop-color="#0EA5FF"/>
+      <stop offset="0.75" stop-color="#5B3BFF"/>
+      <stop offset="1" stop-color="#D24BFF"/>
+    </linearGradient>
+    <linearGradient id="backCardFill" x1="130" y1="110" x2="400" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1FC8FF"/>
+      <stop offset="0.4" stop-color="#1673FF"/>
+      <stop offset="0.8" stop-color="#2B22E8"/>
+      <stop offset="1" stop-color="#8A2BFF"/>
+    </linearGradient>
+    <linearGradient id="frontCardFill" x1="100" y1="360" x2="404" y2="143" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9FDDFF"/>
+      <stop offset="0.35" stop-color="#D5E6FF"/>
+      <stop offset="0.75" stop-color="#ECEBFF"/>
+      <stop offset="1" stop-color="#F6F1FF"/>
+    </linearGradient>
+    <linearGradient id="frontCardEdge" x1="100" y1="178" x2="404" y2="322" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7FF3FF"/>
+      <stop offset="0.5" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#D9B8FF"/>
+    </linearGradient>
+    <linearGradient id="leftArmFill" x1="130" y1="205" x2="205" y2="335" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#20E3FF"/>
+      <stop offset="0.5" stop-color="#1281FF"/>
+      <stop offset="1" stop-color="#1B3BF0"/>
+    </linearGradient>
+    <linearGradient id="rightArmFill" x1="280" y1="196" x2="205" y2="335" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#A855F7"/>
+      <stop offset="0.45" stop-color="#5A1BEA"/>
+      <stop offset="1" stop-color="#2A0FC4"/>
+    </linearGradient>
+    <filter id="frameGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+    <filter id="innerBloom" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="edgeBloom" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <clipPath id="panelClip">
+      <rect x="64" y="44" width="380" height="376" rx="92"/>
+    </clipPath>
+    <clipPath id="frontCardClip">
+      <path d="M100.0,202.0 Q100.0,178.0 123.8,175.3 L380.2,145.7 Q404.0,143.0 404.0,167.0 L404.0,298.0 Q404.0,322.0 380.2,325.0 L123.8,357.0 Q100.0,360.0 100.0,336.0 Z"/>
+    </clipPath>
+  </defs>
+
+  <rect id="canvas" width="1024" height="1024" fill="url(#canvasNavy)"/>
+
+  <g id="icon" transform="matrix(2.4 0 0 2.4 -97.6 -44.8)">
+    <g id="frame">
+      <rect id="frame-glow" x="64" y="44" width="380" height="376" rx="92"
+            fill="none" stroke="url(#frameStroke)" stroke-width="20" filter="url(#frameGlow)"/>
+      <rect id="frame-panel" x="64" y="44" width="380" height="376" rx="92" fill="url(#panelFill)"/>
+      <rect id="frame-inner-glow" x="64" y="44" width="380" height="376" rx="92" clip-path="url(#panelClip)"
+            fill="none" stroke="url(#frameStroke)" stroke-width="26" opacity="0.8" filter="url(#innerBloom)"/>
+      <rect id="frame-stroke" x="64" y="44" width="380" height="376" rx="92"
+            fill="none" stroke="url(#frameStroke)" stroke-width="3.5"/>
+      <rect id="frame-highlight" x="66" y="46" width="376" height="372" rx="90"
+            fill="none" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1"/>
+    </g>
+
+    <g id="back-card">
+      <path d="M129.8,179.9 Q128.0,164.0 143.5,160.2 L360.6,107.2 Q382.0,102.0 384.0,123.9 L403.2,335.1 Q405.0,355.0 385.0,355.2 L166.0,357.8 Q150.0,358.0 148.2,342.1 Z" fill="#000018" opacity="0.45" transform="translate(3 6)" filter="url(#softShadow)"/>
+      <path d="M129.8,179.9 Q128.0,164.0 143.5,160.2 L360.6,107.2 Q382.0,102.0 384.0,123.9 L403.2,335.1 Q405.0,355.0 385.0,355.2 L166.0,357.8 Q150.0,358.0 148.2,342.1 Z" fill="url(#backCardFill)"/>
+      <path d="M129.8,179.9 Q128.0,164.0 143.5,160.2 L360.6,107.2 Q382.0,102.0 384.0,123.9 L403.2,335.1 Q405.0,355.0 385.0,355.2 L166.0,357.8 Q150.0,358.0 148.2,342.1 Z" fill="none" stroke="#7FE6FF" stroke-opacity="0.55" stroke-width="1.2"/>
+    </g>
+
+    <g id="front-card">
+      <path d="M100.0,202.0 Q100.0,178.0 123.8,175.3 L380.2,145.7 Q404.0,143.0 404.0,167.0 L404.0,298.0 Q404.0,322.0 380.2,325.0 L123.8,357.0 Q100.0,360.0 100.0,336.0 Z" fill="#000018" opacity="0.5" transform="translate(4 8)" filter="url(#softShadow)"/>
+      <path d="M100.0,202.0 Q100.0,178.0 123.8,175.3 L380.2,145.7 Q404.0,143.0 404.0,167.0 L404.0,298.0 Q404.0,322.0 380.2,325.0 L123.8,357.0 Q100.0,360.0 100.0,336.0 Z" fill="url(#frontCardFill)"/>
+      <path id="front-card-edge-glow" d="M100.0,202.0 Q100.0,178.0 123.8,175.3 L380.2,145.7 Q404.0,143.0 404.0,167.0 L404.0,298.0 Q404.0,322.0 380.2,325.0 L123.8,357.0 Q100.0,360.0 100.0,336.0 Z" clip-path="url(#frontCardClip)" fill="none"
+            stroke="url(#frontCardEdge)" stroke-width="10" opacity="0.7" filter="url(#edgeBloom)"/>
+      <path d="M100.0,202.0 Q100.0,178.0 123.8,175.3 L380.2,145.7 Q404.0,143.0 404.0,167.0 L404.0,298.0 Q404.0,322.0 380.2,325.0 L123.8,357.0 Q100.0,360.0 100.0,336.0 Z" fill="none" stroke="url(#frontCardEdge)" stroke-width="2"/>
+    </g>
+
+    <g id="v-mark">
+      <path id="v-left-arm" d="M116,207 L154,205 Q164,205 169,214 L225,318 Q212,336 197,334 Q186,332 179,320 Z" fill="url(#leftArmFill)"/>
+      <path id="v-fold-shadow" d="M288,196 L228,318 Q219,334 201,335 Q190,334 184,326 L240,207 Q244,199 254,198 Z" fill="#0A0640" opacity="0.35" transform="translate(-3 2)" filter="url(#softShadow)"/>
+      <path id="v-right-arm" d="M288,196 L228,318 Q219,334 201,335 Q190,334 184,326 L240,207 Q244,199 254,198 Z" fill="url(#rightArmFill)"/>
+      <path id="v-left-highlight" d="M120,209 L176,316" stroke="#BFFBFF" stroke-opacity="0.55" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </g>
+
+    <g id="contact" fill="#2B3F86">
+      <circle id="contact-head" cx="349" cy="187" r="15"/>
+      <path id="contact-body" d="M322,229 Q322,206 349,205 Q377,204 378,226 Q378,229 374,229 Z"/>
+      <g id="contact-lines" stroke="#4A67B0" stroke-width="9" stroke-linecap="round" fill="none">
+        <path d="M281,256 L383,247.5"/>
+        <path d="M277,285 L369,277"/>
+      </g>
+    </g>
+  </g>
+</svg>

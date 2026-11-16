@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/quick_card_root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/quick_card_widget_background" android:contentDescription="@string/quick_card_widget_name">
+    <LinearLayout android:id="@+id/quick_card_body" android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical" android:gravity="center" android:paddingStart="12dp" android:paddingEnd="12dp"
+        android:paddingTop="8dp" android:paddingBottom="8dp">
+    <FrameLayout android:id="@+id/quick_card_avatar" android:layout_width="56dp" android:layout_height="56dp" android:background="@drawable/quick_card_widget_avatar">
+        <ImageView android:id="@+id/quick_card_photo" android:layout_width="match_parent" android:layout_height="match_parent"
+            android:scaleType="centerCrop" android:visibility="gone" android:contentDescription="@null" />
+        <TextView android:id="@+id/quick_card_initials" android:layout_width="match_parent" android:layout_height="match_parent"
+            android:gravity="center" android:textSize="22sp" android:textColor="@color/quick_card_accent" android:visibility="gone" />
+        <ImageView android:id="@+id/quick_card_person" android:layout_width="match_parent" android:layout_height="match_parent"
+            android:padding="12dp" android:src="@drawable/ic_person" android:tint="@color/quick_card_accent" android:contentDescription="@null" />
+    </FrameLayout>
+    <TextView android:id="@+id/quick_card_name" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" android:gravity="center" android:maxLines="2" android:ellipsize="end"
+        android:textSize="16sp" android:textStyle="bold" android:textColor="@color/quick_card_text" android:text="@string/quick_card_widget_name" />
+    <TextView android:id="@+id/quick_card_title" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="4dp" android:gravity="center" android:maxLines="2" android:ellipsize="end" android:textSize="12sp"
+        android:textColor="@color/quick_card_secondary" android:text="@string/quick_card_widget_loading" />
+    </LinearLayout>
+    <ImageButton android:id="@+id/quick_card_menu" android:layout_width="48dp" android:layout_height="48dp"
+        android:layout_gravity="top|end" android:padding="14dp" android:src="@drawable/quick_card_widget_menu_icon"
+        android:background="?android:attr/selectableItemBackgroundBorderless" android:contentDescription="@string/quick_card_widget_options"
+        android:focusable="true" />
+</FrameLayout>

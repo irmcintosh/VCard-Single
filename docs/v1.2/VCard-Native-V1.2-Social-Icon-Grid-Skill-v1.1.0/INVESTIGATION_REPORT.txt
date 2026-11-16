@@ -1,0 +1,236 @@
+I've finished the investigation. The main finding is a conflict: the approved requirement puts the icon grid on My Card, but the approved Classic spec says Classic's links must not change, so I need your decision before writing the implementation skill. Nothing was modified and nothing was built or run.
+
+On references: all the requested documents exist. `03_PROJECT_ARCHITECTURE.md` and `04_UI_DESIGN_GUIDELINES.md` are under `docs\legacy\`, and I've now read both in full. Neither mentions social links or an icon grid. They do add some general rules, which I've folded into sections 2, 5 and 7. The protection skill has not changed since my full read earlier this session.
+
+## 1. Current professional-link architecture
+
+**Data and persistence**
+- Links are stored as a list of `SocialProfile` entries in `Profile.kt`. Each has an id, platform, label, URL, a show-on-card setting, an include-in-contact-export setting and a legacy field.
+- Order is simply list order; `moveSocialProfile` reorders them.
+- The old LinkedIn, GitHub and "Other professional link" fields are still migrated and mirrored into this list.
+- `ProfileCodec.kt` saves the list as `socialProfiles`, and `BackupDataCodec.kt` carries it in backups.
+- There is **no limit on the number of links**, and duplicate entries are allowed.
+
+**Platforms**
+- `SocialPlatformOption` has these stored IDs: `linkedin`, `github`, `facebook`, `instagram`, `x`, `youtube`, `tiktok`, `threads`, `bluesky`, `mastodon`. There is also `Other`, which stores a custom name.
+- `SocialPlatformSelection.fromSaved` matches stored values ignoring case, accepts display names, and maps `twitter` to X. Anything else becomes Other, including the legacy `otherProfessional`.
+
+**Validation and editing**
+- `socialProfileFieldErrors` requires:
+  - a platform and a label, each up to 160 characters;
+  - an HTTPS URL of up to 2048 characters.
+- `browserUrlCandidate` normalizes URLs.
+- Editing happens in `SocialProfileEditor` in `ProfileScreens.kt`. It's backed by the add, edit, remove, select-platform and move functions in `ProfileViewModel`.
+
+**Data flow to the card**
+- `toMyCard` turns each saved entry into a `CardProfessionalLink` (label, URL, platform).
+- `visibleProfessionalLinks` drops links that have a blank label, are hidden from the card, or have an invalid URL. Order and duplicates are preserved.
+
+**Rendering**
+- `ProfileCard` is the single renderer for both My Card and the Appearance Editor's live preview. The gallery thumbnails are separate static drawings and are not affected.
+- **Classic renders its links itself**, in a private `ProfessionalLinks` in `ClassicCard.kt`.
+  - It's a horizontally scrolling row of 48 dp cells.
+  - LinkedIn and GitHub show an icon only; every other platform shows its label as underlined text.
+  - There is no visible label under the icons.
+- **The other six styles share one component:** `ProfessionalLinkList`.
+  - It's a vertical list of rows, each an icon plus text.
+  - Icons come from `professionalLinkIcon`. That mapping only recognises lowercase `linkedin` and `github`; everything else gets the generic external-link icon.
+  - Each style calls it with its own options:
+
+| Style | How links are placed today |
+|---|---|
+| Minimal | Plain list |
+| Professional | Compact list with dividers, inside `ProfessionalPanel` |
+| Modern | Section label plus list |
+| Executive | Divider, muted label, compact list |
+| Editorial | List with dividers, inside `EditorialSection` |
+| Horizon | Section label plus list |
+
+**Tap behaviour**
+- Every link sends a "Social" action with the link's URL to `openContactAction`.
+- That re-checks the URL as HTTPS and opens it in a browser. It shows a toast if the URL fails or no app can open it.
+- This matches the legacy architecture's rule: open HTTPS links with `ACTION_VIEW` and handle the case where no app is available.
+- Each link's screen-reader text is the existing string `social_open_description`: "Open %1$s: %2$s".
+
+**Custom Share, Hosted Profile and widget**
+- None of these use social links.
+- Links only leave the app through the vCard (`ContactExport`), for entries marked for contact export. This milestone doesn't touch that.
+- Modern's contact tiles don't include social links. The tile mapping has a branch for them, but it is never reached.
+
+## 2. Approved requirements and their sources
+
+**Approved**
+- My Card only: configured links shown as a responsive, labelled icon grid. (`Requirements §4`, decision V12-10.)
+- Recognisable icons for LinkedIn, GitHub, Facebook, Instagram, X, YouTube, TikTok, Threads, Bluesky and Mastodon, plus a generic icon for Other.
+- Preserve URLs, existing order, duplicates, validation and link-opening behaviour. Keep accessible touch targets and font scaling.
+- No changes to:
+  - Hosted Profile editing or its QR;
+  - external hosted websites;
+  - widget links;
+  - Custom Share fields.
+- Review platform icon licensing before implementation, and add no new platform types (Requirements §8).
+- The `technical constraints` (§3, §4, §6) add:
+  - reuse the existing platform definitions and URL opening;
+  - review licensing and accessibility labels;
+  - test that URLs, order, duplicates and icon labels are unchanged.
+- Shared rules (`CARD_STYLE_SHARED_RULES.md`):
+  - 48 dp targets and meaningful labels;
+  - long links handled gracefully;
+  - no clipping at font scale 1.5 or above;
+  - no external image assets;
+  - the preview must match the My Card renderer.
+- `Classic spec`:
+  - Classic keeps its professional links;
+  - its spacing, typography, hierarchy, colours, action order and responsive rules must not change.
+- Minimal counts Professional Links as one of its four slots.
+
+**General rules from the legacy documents** (not specific to the grid)
+- `04_UI_DESIGN_GUIDELINES.md`:
+  - use Material 3 components and accessibility semantics;
+  - a restrained accent, and no decoration that hurts readability;
+  - light/dark contrast, 48 dp minimum targets, readable labels and screen-reader descriptions;
+  - all screens must work with large text and narrow widths.
+- The same file says identity imagery must be treated as placeholders "unless user supplies authorized assets". That directly affects the brand icon decision below.
+- Its My Card description (cover, photo, name, bio, four actions, secondary rows) predates social links and doesn't mention them.
+- `03_PROJECT_ARCHITECTURE.md`:
+  - keep offline features offline;
+  - validate URLs;
+  - minimise permissions;
+  - check dependencies against official guidance before adding them.
+- It's labelled a "proposed blueprint" and suggests a `ui/components/` folder for shared components. The actual code puts card components under `ui/screens/card/` instead.
+
+**Not specified by any document**
+- whether each style should use a grid instead of its current list;
+- icon sizes and spacing;
+- whether labels are visible or screen-reader-only;
+- a maximum number of links;
+- how icons respond to theme and accent.
+
+Everything I propose for these below is a recommendation only.
+
+## 3. Current icon resources and dependencies
+
+- **Existing:** vector drawables `ic_linkedin`, `ic_github` and `ic_external`. They are white single-colour vectors that the app tints.
+- **Missing:** icons for Facebook, Instagram, X, YouTube, TikTok, Threads, Bluesky and Mastodon.
+- **Dependencies:** Compose BOM 2025.04.01 with Material 3, UI and Foundation.
+  - There is no extended icons library and no image-loading library.
+  - Material icons don't include brand logos anyway, so no new dependency is needed.
+- **Provenance:** I found no record of where `ic_linkedin` and `ic_github` came from or under what licence.
+
+## 4. Fit with each of the seven styles
+
+| Style | Proposed integration |
+|---|---|
+| **Classic** | **Conflict.** The requirement applies the grid to My Card, which includes Classic, but Classic's spec forbids changing it. I recommend leaving Classic unchanged unless you explicitly authorise otherwise. |
+| Minimal | The grid replaces the list and still counts as one slot; selection logic is untouched. |
+| Professional | Grid inside the existing panel with compact cell padding; drop the dividers. |
+| Modern | Grid below the contact tiles, under its existing label. Cells should be lighter and smaller than the tiles so they don't read as more contact tiles. |
+| Executive | Transparent or outlined cells with muted labels. Keep the existing divider and restrained spacing. |
+| Editorial | Inside `EditorialSection`; labels use the body typography, with no oversized type. |
+| Horizon | Inside the opaque content panel. Column count follows the panel width, so it stays clear of the cover. |
+
+The Appearance Editor preview will pick up the grid automatically because it uses the same renderer.
+
+## 5. Recommended shared design
+
+**New file `SocialIconGrid.kt`** in `ui/screens/card/`, next to the existing card components rather than the legacy `ui/components/` suggestion. It would contain:
+- **`socialPlatformIcon(platform)`:** a pure function built on `SocialPlatformSelection.fromSaved`, so the card recognises the same names as the editor. It returns one of the 10 brand icons or the Other icon.
+- **`socialGridColumns(widthDp, fontScale, count)`:** a pure function that computes columns from a minimum cell width that grows with font scale, giving 1 to 4 columns.
+  - It follows the balanced-row approach Modern already uses, which avoids experimental Compose APIs.
+- **The `SocialIconGrid` composable:** rows of equal-width cells, each at least 48 dp. Each cell shows an icon (about 24 dp) above a visible label, limited to 2 lines with an ellipsis.
+  - The screen-reader text stays "Open label: url".
+  - Cells are keyed by position so duplicate links survive.
+  - Tapping sends the same Social action with the same URL, so opening behaviour is unchanged.
+  - It takes small presentation options (compact, muted, container colour) for each style.
+
+**Changes to `CardSections.kt`**
+- `ProfessionalLinkList` keeps its name and signature but draws the grid.
+- `professionalLinkIcon` uses the new mapping.
+- The six style files need little or no change, and the existing test that each style calls `ProfessionalLinkList(content` keeps passing.
+
+**Colour:** single-colour icons tinted with the accent on a tonal surface.
+- They follow the light/dark theme and the accent, and fit the guideline's "restrained accent".
+- Bundled vector drawables work offline, as the architecture requires.
+- This depends on the licensing decision below.
+
+## 6. Proposed file changes
+
+**Create**
+- `ui/screens/card/SocialIconGrid.kt`
+- 8 new drawables, one per missing brand, plus either a dedicated Other icon or reuse of `ic_external`
+- `test/.../ui/screens/card/SocialIconGridTest.kt`
+- An icon provenance and licence record. This is a documentation change and needs your approval.
+
+**Modify**
+- `CardSections.kt`
+- Possibly small option changes in the six non-Classic style files
+- `CardRendererTest.kt`
+- `strings.xml`, only if a new string turns out to be needed; the existing description string is reused
+
+**Leave unchanged**
+- `ClassicCard.kt`, unless you approve otherwise
+- The profile model, codecs and schema 5; the ViewModel and editor
+- `MainActivity`, Custom Share, Hosted Profile, QR export and the widget
+- Manifest, Gradle, signing and version
+
+## 7. Risks and licensing
+
+- **Licensing (main risk):** the logos are trademarks of their owners:
+  - Meta (Facebook, Instagram and Threads)
+  - Google (YouTube)
+  - X Corp
+  - ByteDance (TikTok)
+  - Bluesky
+  - Mastodon gGmbH
+  - Microsoft (LinkedIn)
+  - GitHub
+
+  Even freely licensed icon artwork doesn't grant trademark rights. Some brand guidelines also restrict recolouring, so tinting with the accent may not be allowed for every brand. The UI guidelines already require identity imagery to be supplied or authorised by you. So you'll need to supply or approve the artwork and how it's coloured, and we should record where each icon came from. This isn't legal advice. I downloaded nothing.
+- **Layout:** labels can be up to 160 characters, there's no limit on link count, and large font scales could make cells very tall.
+  - The 2-line ellipsis, with the full text available to screen readers, handles this.
+  - It still needs emulator checks at narrow widths and at 1.5x or larger fonts, as both the shared rules and the legacy guidelines require.
+- **Look:** in Modern the grid could resemble the contact tiles, and in Executive and Editorial it could make the card feel more crowded.
+- **Recognition differences:** today the card recognises only lowercase `linkedin` and `github`. With the new mapping, saved values such as "LinkedIn" or "twitter" will also show a brand icon. The saved data itself doesn't change.
+- **Data:** saved data, schema 5 and backups are not affected, and no new dependencies are needed.
+
+## 8. Verification plan
+
+**JVM tests**
+- The icon mapping for all 11 platforms, including:
+  - case variations, display names and `twitter`;
+  - `otherProfessional`, custom names and blank values.
+- Every referenced drawable file exists.
+- Column counts across widths and font scales: never zero, never more than the link count, and never a lone cell beside empty space.
+- Order and duplicates are preserved through the visible-links filter.
+- Source checks that each cell:
+  - sends the Social action with the link's URL;
+  - uses the existing description string;
+  - has a 48 dp minimum height;
+  - loads no network images.
+- Each non-Classic style still uses `ProfessionalLinkList`. If you keep Classic excluded, a hash or source check confirms it is unchanged.
+- Custom Share, Hosted Profile and widget sources don't reference the grid.
+- The existing persistence, backup, contact export and Custom Share tests still pass unchanged.
+
+**Emulator**
+- All seven styles in light and dark, with each accent.
+- 1, 2, 5 and 11 links, duplicates, long labels, and a custom Other platform.
+- A narrow width, and font scales 1.0, 1.5 and 2.0.
+- TalkBack reads each cell correctly.
+- Tapping each cell opens the right URL, and the "no handler" message still appears when nothing can open it.
+- Minimal with Professional Links both selected and not selected.
+- The Appearance Editor preview matches My Card.
+- Custom Share and Hosted Profile QR behave as before.
+
+## 9. Decisions needed from you
+
+1. **Classic:** keep it exactly as it is (recommended), or authorise a change to `ClassicCard.kt`. That could be just the extended icon mapping or the full grid.
+2. **Icon artwork:** which source and licence. Also whether icons are tinted with the accent, kept in official colours, or plain black-and-white.
+3. **Other icon:** reuse `ic_external`, or add a new generic link icon.
+4. **Labels:** a 2-line ellipsis with the full label for screen readers (recommended), or full wrapping.
+5. **Columns:** a maximum of 4 per row (recommended), and the minimum cell width.
+6. **Preview:** confirm that "My Card only" still allows the Appearance Editor preview to show the grid, since it uses the same renderer.
+7. **Provenance record:** approval to add the icon licence record to the docs.
+
+## 10. Confirmation
+
+No files were created, modified or deleted; I only read and searched files. No builds, tests, installs or emulator actions were run, and no backups were needed. I'm stopping here until you review this and approve the implementation skill.

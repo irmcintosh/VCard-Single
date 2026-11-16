@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- VCard Native launcher icon: single-color themed-icon source (M1.13 Step 3B).
+     Transparent background; one fill color; no gradients, glows or shadows.
+     The front card is knocked out of the back card, and the V, contact head/body and
+     information lines are knocked out of the front card so the shapes read as layers.
+     Artwork is centered within the inner 626 x 626 area (Android 66/108 safe zone). -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>VCard Native launcher icon - monochrome source</title>
+  <defs>
+    <mask id="backCardMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
+      <rect width="1024" height="1024" fill="#FFFFFF"/>
+      <path d="M100.0,202.0 Q100.0,178.0 123.8,175.3 L380.2,145.7 Q404.0,143.0 404.0,167.0 L404.0,298.0 Q404.0,322.0 380.2,325.0 L123.8,357.0 Q100.0,360.0 100.0,336.0 Z" fill="#000000" stroke="#000000" stroke-width="10" stroke-linejoin="round" transform="matrix(1.95 0 0 1.95 15.6 59.1)"/>
+    </mask>
+    <mask id="frontCardMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024">
+      <rect width="1024" height="1024" fill="#FFFFFF"/>
+      <g transform="matrix(1.95 0 0 1.95 15.6 59.1)" fill="#000000">
+        <path d="M116,207 L154,205 Q164,205 169,214 L203,277 L240,207 Q244,199 254,198 L288,196 L228,318 Q219,334 201,335 Q186,333 179,320 Z"/>
+        <circle cx="349" cy="187" r="15"/>
+        <path d="M322,229 Q322,206 349,205 Q377,204 378,226 Q378,229 374,229 Z"/>
+        <g stroke="#000000" stroke-width="10" stroke-linecap="round" fill="none">
+          <path d="M281,256 L383,247.5"/>
+          <path d="M277,285 L369,277"/>
+        </g>
+      </g>
+    </mask>
+  </defs>
+  <g id="monochrome" fill="#FFFFFF">
+    <g mask="url(#backCardMask)">
+      <path id="back-card" d="M129.8,179.9 Q128.0,164.0 143.5,160.2 L360.6,107.2 Q382.0,102.0 384.0,123.9 L403.2,335.1 Q405.0,355.0 385.0,355.2 L166.0,357.8 Q150.0,358.0 148.2,342.1 Z" transform="matrix(1.95 0 0 1.95 15.6 59.1)"/>
+    </g>
+    <g mask="url(#frontCardMask)">
+      <path id="front-card" d="M100.0,202.0 Q100.0,178.0 123.8,175.3 L380.2,145.7 Q404.0,143.0 404.0,167.0 L404.0,298.0 Q404.0,322.0 380.2,325.0 L123.8,357.0 Q100.0,360.0 100.0,336.0 Z" transform="matrix(1.95 0 0 1.95 15.6 59.1)"/>
+    </g>
+  </g>
+</svg>

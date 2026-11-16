@@ -1,0 +1,17 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp" android:height="48dp" android:viewportWidth="64" android:viewportHeight="64">
+    <path android:fillColor="#F4F7FB"
+        android:pathData="M18,4H46A14,14 0,0 1,60 18V46A14,14 0,0 1,46 60H18A14,14 0,0 1,4 46V18A14,14 0,0 1,18 4Z" />
+    <group android:name="finder_markers">
+        <path android:fillColor="#14243A" android:fillType="evenOdd"
+            android:pathData="M10,10H24V24H10ZM13,13H21V21H13ZM40,10H54V24H40ZM43,13H51V21H43ZM10,40H24V54H10ZM13,43H21V51H13Z" />
+        <path android:fillColor="#14243A"
+            android:pathData="M15,15H19V19H15ZM45,15H49V19H45ZM15,45H19V49H15Z" />
+    </group>
+    <group android:name="decorative_modules">
+        <path android:fillColor="#14243A"
+            android:pathData="M28,10H32V14H28ZM34,16H38V20H34ZM28,18H31V21H28ZM10,28H14V32H10ZM16,34H20V38H16ZM21,28H24V31H21ZM44,28H48V32H44ZM50,34H54V38H50ZM43,40H47V44H43ZM49,47H53V51H49ZM40,50H44V54H40ZM28,48H32V52H28ZM34,54H38V57H34Z" />
+    </group>
+    <path android:name="central_v" android:fillColor="#245EA8"
+        android:pathData="M23,23H29L32,36L35,23H41L34,43H30Z" />
+</vector>

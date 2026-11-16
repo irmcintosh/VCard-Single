@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="show_my_qr_code"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_show_qr"
+        android:shortcutShortLabel="@string/shortcut_show_my_qr_code"
+        android:shortcutLongLabel="@string/shortcut_show_my_qr_code">
+        <intent
+            android:action="com.mackseoul.vcardnative.action.SHOW_MY_QR_CODE"
+            android:targetPackage="com.mackseoul.vcardnative"
+            android:targetClass="com.mackseoul.vcardnative.MainActivity" />
+    </shortcut>
+</shortcuts>

@@ -1,0 +1,67 @@
+FG-00 runtime command evidence, 2026-10-31 (-04:00).
+Selected actual output excerpts; host transcript account/machine headers omitted.
+All device commands targeted emulator-5560 explicitly.
+
+Preflight: no attached ADB devices and no running emulator processes.
+Emulator launch: emulator.exe -avd VCard_API_31 -port 5560
+Host launcher session exit: 1
+emulator.exe : netsim I 10-31 17:05:11.341 netsimd.rs:375 - netsim startup
+CategoryInfo: NotSpecified, RemoteException
+FullyQualifiedErrorId: NativeCommandError
+Despite this host stderr handling error, the emulator booted and was verified:
+BOOT=1
+VCard_API_31
+OK
+31
+PACKAGE_QUERY_EXIT=0
+
+Runtime script started 13:06:33 and ended 13:06:54.
+VERIFIED_AVD=VCard_API_31 SERIAL=emulator-5560 API=31
+HARNESS_PREEXISTED=False
+Performing Streamed Install
+Success
+ADB_EXIT=0 COMMAND=install C:\Users\Ian12724\Downloads\PixelApp\VCard\FG00_Toolchain_Harness\app\build\outputs\apk\debug\app-debug.apk
+Starting: Intent { cmp=com.mackseoul.vcardnative.fg00harness/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.mackseoul.vcardnative.fg00harness/.MainActivity
+TotalTime: 1090
+WaitTime: 1121
+Complete
+ADB_EXIT=0 COMMAND=shell am start -W -n com.mackseoul.vcardnative.fg00harness/.MainActivity
+HARNESS_PID=5941
+UI hierchary dumped to: /data/local/tmp/fg00-31.xml
+ADB_EXIT=0 COMMAND=shell uiautomator dump /data/local/tmp/fg00-31.xml
+
+Host evidence-collection error during pull:
+adb.exe : /data/local/tmp/fg00-31.xml: 1 file pulled, 0 skipped. 1.4 MB/s (2929 bytes in 0.002s)
+At fg00-runtime-check.ps1:16 char:15
+$result = & $adb -s $Serial @Arguments 2>&1
+CategoryInfo: NotSpecified, RemoteException
+FullyQualifiedErrorId: NativeCommandError
+Runtime script exit: 1
+Pull's native exit code was not captured before exception handling.
+The 2929-byte XML file exists and was inspected separately.
+It contains package-owned text "FG-00 Toolchain Verification".
+
+Authorized cleanup from finally:
+Success
+ADB_EXIT=0 COMMAND=uninstall com.mackseoul.vcardnative.fg00harness
+HARNESS_REMOVED=True
+ADB_EXIT=0 COMMAND=shell rm -f /data/local/tmp/fg00-31.xml /data/local/tmp/fg00-31.png
+
+Shutdown identity check:
+VCard_API_31
+OK
+Targeted emulator shutdown:
+OK: killing emulator, bye bye
+OK
+SHUTDOWN_EXIT=0
+Final inventory:
+List of devices attached
+(no device entries)
+
+Post-cleanup APK verification:
+APK_BYTES=23620980
+SHA256=B5BA853B941B3E356B7E6425BF44CD284850018C397A0EE9A63531C9C7C7FB36
+DATE=2026-10-31T13:07:20.3952205-04:00

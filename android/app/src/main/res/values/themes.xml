@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.VCardNative" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/vcard_background</item>
+    </style>
+    <style name="Theme.VCardNative.WidgetMenu" parent="android:Theme.Material.Dialog.NoActionBar">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@drawable/quick_card_widget_background</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:backgroundDimAmount">0.18</item>
+    </style>
+</resources>

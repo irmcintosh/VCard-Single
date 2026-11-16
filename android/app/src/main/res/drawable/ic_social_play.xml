@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Original VCard Native generic play symbol: outlined circle with play triangle (V1.2 Social Icon Grid, YouTube).
+     Not the platform's rounded-rectangle logo. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <path android:fillColor="#00000000" android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2"
+        android:pathData="M21,12a9,9 0,1 1,-18 0a9,9 0,1 1,18 0z" />
+    <path android:fillColor="#FFFFFFFF"
+        android:pathData="M10,8.5v7l5.5,-3.5z" />
+</vector>

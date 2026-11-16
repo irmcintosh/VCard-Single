@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.10.1" type="incidents">
+
+    <incident
+        id="AndroidGradlePluginVersion"
+        severity="warning"
+        message="A newer version of Gradle than 8.11.1 is available: 8.14.6">
+        <fix-replace
+            description="Update to 8.14.6"
+            oldString="8.11.1"
+            replacement="8.14.6"
+            priority="0"/>
+        <location
+            file="$HOME/Downloads/PixelApp/VCard/FG00_Toolchain_Harness/gradle/wrapper/gradle-wrapper.properties"
+            line="4"
+            column="17"
+            startOffset="168"
+            endLine="4"
+            endColumn="81"
+            endOffset="232"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.compose:compose-bom than 2025.04.01 is available: 2026.09.00">
+        <fix-replace
+            description="Change to 2026.09.00"
+            family="Update versions"
+            oldString="2025.04.01"
+            replacement="2026.09.00"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="38"
+            column="20"
+            startOffset="762"
+            endLine="38"
+            endColumn="71"
+            endOffset="813"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.activity:activity-compose than 1.10.1 is available: 1.13.0">
+        <fix-replace
+            description="Change to 1.13.0"
+            family="Update versions"
+            oldString="1.10.1"
+            replacement="1.13.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="39"
+            column="20"
+            startOffset="834"
+            endLine="39"
+            endColumn="63"
+            endOffset="877"/>
+    </incident>
+
+</incidents>

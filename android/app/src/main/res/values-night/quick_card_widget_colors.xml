@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="quick_card_background">#101418</color>
+    <color name="quick_card_border">#34414E</color>
+    <color name="quick_card_text">#EFF3F8</color>
+    <color name="quick_card_secondary">#BBC7D6</color>
+    <color name="quick_card_accent">#A8CAFF</color>
+    <color name="quick_card_avatar">#24364C</color>
+</resources>
